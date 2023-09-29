@@ -7,3 +7,5 @@ In this game you are a newly developed Medical Nano Machine, also called MnMs, w
 
 # Gameplay
 You will spawn in a body part of your host, and start doing your job from there.
+
+# Credits

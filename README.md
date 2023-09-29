@@ -10,3 +10,4 @@ You will spawn in a body part of your host, and start doing your job from there.
 
 # Credits
 Viero Famico - Programmer
+Elbert Hans Lianto - Artist

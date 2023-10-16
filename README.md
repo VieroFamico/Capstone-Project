@@ -11,3 +11,4 @@ You will spawn in a body part of your host, and start doing your job from there.
 # Credits
 Viero Famico - Programmer <br>
 Elbert Hans Lianto - Artist
+Lucas Stefan - Designer

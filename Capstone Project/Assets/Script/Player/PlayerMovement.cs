@@ -8,15 +8,12 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb2d;
     private Camera maincam;
     private Vector3 mousepos;
+    private PlayerProperties playerprops;
     private GameObject gameManagerGO;
     private GameManager gameManager;
     [SerializeField] private Rigidbody2D bullet;
     [SerializeField] private GameObject cannon;
 
-    private float speed = 1.0f;
-    public float speedmod = 0;
-    private float firerate = 1.0f;
-    public float fireratemod = 0;
 
     private bool autoshoot = false;
     private float nextshoot = 0f;
@@ -25,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     {
         maincam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         rb2d = GetComponent<Rigidbody2D>();
+        playerprops = GetComponent<PlayerProperties>();
         gameManagerGO = GameObject.FindGameObjectWithTag("GameManager");
         gameManager = gameManagerGO.GetComponent<GameManager>();
     }
@@ -35,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         Movement();
         Camera();
         
-        maincam.transform.position = new Vector3(rb2d.position.x, rb2d.position.y, -10);
+        maincam.transform.position = new Vector3(rb2d.position.x, rb2d.position.y, -10f);
     }
     void Update()
     {
@@ -47,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         float Vertical = Input.GetAxis("Vertical");
         float Horizontal = Input.GetAxis("Horizontal");
 
-        rb2d.velocity = new Vector2(Horizontal * (speed + speedmod), Vertical * (speed + speedmod));
+        rb2d.velocity = new Vector2(Horizontal * (playerprops.Speed()), Vertical * (playerprops.Speed()));
     }
     private void Camera()
     {
@@ -63,21 +61,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            if(autoshoot)
-            {
-                autoshoot = false;
-            }
-            else
-            {
-                autoshoot = true;
-            }
+            if(autoshoot){ autoshoot = false; }
+            else{ autoshoot = true; }
         }
         
         if ((Input.GetMouseButtonDown(0) || autoshoot) && Time.time > nextshoot)
         {
             Rigidbody2D shotbullet = Instantiate(bullet, cannon.transform.position, Quaternion.identity);
             shotbullet.transform.rotation = transform.rotation;
-            nextshoot = Time.time + (1f / firerate);
+            nextshoot = Time.time + (1f / playerprops.RateOfFire());
         }
     }
     public bool AutoShoot()

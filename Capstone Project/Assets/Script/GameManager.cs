@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -12,9 +14,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Slider playerHP;
     [SerializeField] private Slider PlayerEXP;
+    [SerializeField] private GameObject deathScreen;
 
     public GameObject autoShoot;
-    // Start is called before the first frame update
+    public GameObject levelUpScreen;
+    public GameObject option1;
+    public GameObject option2;
+    public GameObject option3;
     void Start()
     {
         playerGO = GameObject.FindGameObjectWithTag("Player");
@@ -33,5 +39,27 @@ public class GameManager : MonoBehaviour
     {
         playerHP.value = HP;
         playerHP.GetComponentInChildren<TextMeshProUGUI>().text = HP.ToString();
+    }
+    public void UpdateEXP(float EXP)
+    {
+        PlayerEXP.value = EXP;
+        playerHP.GetComponentInChildren<TextMeshProUGUI>().text = EXP.ToString();
+    }
+    public void LevelUpChosen()
+    {
+        levelUpScreen.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        string name = EventSystem.current.currentSelectedGameObject.name;
+        GameObject chosen = EventSystem.current.currentSelectedGameObject;
+
+        playerProperties.StatsUpgrade("attack", 1f);
+
+        levelUpScreen.SetActive(false);
+        Time.timeScale = 1.0f;
+    }
+    
+    public void DeathScreen()
+    {
+        deathScreen.SetActive(true);
+        Time.timeScale = 0f;
     }
 }

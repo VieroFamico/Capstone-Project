@@ -16,6 +16,7 @@ public class Melee : MonoBehaviour
     private float attack = 20f;
     private float speed = 1f;
     private float elapsedtime = 0f;
+    [SerializeField] private GameObject exp;
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -52,7 +53,7 @@ public class Melee : MonoBehaviour
         {
             float damage = collision.gameObject.GetComponent<Bullet>().Damage();
             float knockback = collision.gameObject.GetComponent<Bullet>().KnockBack();
-            rb2d.AddForce((transform.position - collision.transform.position) * knockback, ForceMode2D.Force);
+            rb2d.AddForce((transform.position - collision.transform.position) * knockback, ForceMode2D.Impulse);
             TakeDamage(damage);
         }
     }
@@ -69,9 +70,16 @@ public class Melee : MonoBehaviour
         hp -= damage;
         if(hp <= 0f)
         {
+            Instantiate(exp, transform.position, Quaternion.identity);
             Destroy(gameObject);
-
         }
         return;
+    }
+    
+    public void AddStats(float HP, float Attack, float Speed)
+    {
+        hp += HP;
+        attack += Attack;
+        speed += Speed;
     }
 }

@@ -11,9 +11,11 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject setting;
     [SerializeField] private TextMeshProUGUI quit;
 
+    private GameManager gameManager;
+
     void Start()
     {
-        
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -25,6 +27,16 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    public void RetryGame()
+    {
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        gameManager.Retry();
+    }
+    public void ExitToMainMenu()
+    {
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex-1);
+        
     }
     public void Setting()
     {

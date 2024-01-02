@@ -21,11 +21,14 @@ public class GameManager : MonoBehaviour
     public GameObject option1;
     public GameObject option2;
     public GameObject option3;
+
+    private float elapsedTime;
     void Start()
     {
         playerGO = GameObject.FindGameObjectWithTag("Player");
         player = playerGO.GetComponent<PlayerMovement>();
         playerProperties = playerGO.GetComponent<PlayerProperties>();
+        elapsedTime = 0f;
     }
 
     // Update is called once per frame
@@ -33,13 +36,19 @@ public class GameManager : MonoBehaviour
     {
         if (player.AutoShoot()) autoShoot.SetActive(true);
         else autoShoot.SetActive(false);
+
+
+        elapsedTime += Time.deltaTime;
     }
 
-    public void UpdateHP(float HP)
+    public void Retry()
     {
-        playerHP.value = HP;
-        playerHP.GetComponentInChildren<TextMeshProUGUI>().text = HP.ToString();
+        playerGO = GameObject.FindGameObjectWithTag("Player");
+        player = playerGO.GetComponent<PlayerMovement>();
+        playerProperties = playerGO.GetComponent<PlayerProperties>();
+        elapsedTime = 0f;
     }
+
     public void UpdateEXP(float EXP)
     {
         PlayerEXP.value = EXP;
@@ -56,7 +65,10 @@ public class GameManager : MonoBehaviour
         levelUpScreen.SetActive(false);
         Time.timeScale = 1.0f;
     }
-    
+    public float ElapsedTime()
+    {
+        return elapsedTime;
+    }
     public void DeathScreen()
     {
         deathScreen.SetActive(true);

@@ -10,35 +10,41 @@ public class Melee : MonoBehaviour
     private Rigidbody2D rb2d;
     private GameObject player;
     private PlayerProperties playerprop;
+    private GameManager gameManager;
     private Vector3 playerposition;
     private Vector3 tempplayerposition;
+
+
+
+
     private float hp = 25f;
     private float attack = 20f;
     private float speed = 1f;
-    private float elapsedtime = 0f;
     [SerializeField] private GameObject exp;
-    void Awake()
+    void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
         playerprop = player.GetComponent<PlayerProperties>();
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         rb2d = GetComponent<Rigidbody2D>();
         
     }
     private void FixedUpdate()
     {
-        elapsedtime += Time.deltaTime;
+
     }
     void Update()
     {
-        if(elapsedtime > 300f)
+        if(gameManager.ElapsedTime() > 300f)
         {
             hp += 25f;
             attack += 10f;
             speed += 0.25f;
         }
         playerposition = new Vector3(player.transform.position.x, player.transform.position.y, 0f);
+        rb2d.velocity = Vector2.zero;
         agent.SetDestination(playerposition);
     }
 

@@ -60,14 +60,11 @@ public class PlayerProperties : MonoBehaviour
         {
             //dead
             healthPoint = 0;
-            gameManager.UpdateHP(healthPoint);
-            gameObject.SetActive(false);
             gameManager.DeathScreen();
-            Time.timeScale = 0f;
+            gameObject.SetActive(false);
             return;
         }
         StartCoroutine(Invincible(1f));
-        gameManager.UpdateHP(healthPoint);
         return;
     }
     IEnumerator Invincible(float Duration)

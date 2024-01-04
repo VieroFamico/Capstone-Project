@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,6 +44,14 @@ public class Melee : MonoBehaviour
             attack += 10f;
             speed += 0.25f;
         }
+        if(player != null)
+        {
+            MoveToPlayer();
+        }
+    }
+
+    private void MoveToPlayer()
+    {
         playerposition = new Vector3(player.transform.position.x, player.transform.position.y, 0f);
         rb2d.velocity = Vector2.zero;
         agent.SetDestination(playerposition);

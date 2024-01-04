@@ -21,14 +21,14 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(elapsedtime < 30f)
+        if(elapsedtime < 45f)
         {
             if (10f < time)
             {
                 Spawn();
             }
         }
-        else if(elapsedtime < 60f)
+        else if(elapsedtime < 90f)
         {
             if (5f < time)
             {
@@ -57,8 +57,13 @@ public class EnemySpawner : MonoBehaviour
         GameObject newMeleeGO = Instantiate(melee, new Vector3(x * posOrNegX, y * posOrNegY, 0), Quaternion.identity);
         Melee newMelee = GetComponent<Melee>();
         time = 0;
-        if (elapsedtime > 300f)
+        if (elapsedtime > 45f && elapsedtime < 90f)
         {
+            newMelee.AddStats(25f, 10f, 0.25f);
+        }
+        else if (elapsedtime > 45f && elapsedtime < 135f)
+        {
+            newMelee.AddStats(25f, 10f, 0.25f);
             newMelee.AddStats(25f, 10f, 0.25f);
         }
     }

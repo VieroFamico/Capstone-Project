@@ -6,6 +6,10 @@ TagManager:
   tags:
   - GameManager
   - Bullet
+  - MeleeEnemy
+  - ToGameManager
+  - MenuManager
+  - Experience
   layers:
   - Default
   - TransparentFX

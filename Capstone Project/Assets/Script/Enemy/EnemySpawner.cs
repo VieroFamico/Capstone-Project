@@ -59,12 +59,12 @@ public class EnemySpawner : MonoBehaviour
         time = 0;
         if (elapsedtime > 45f && elapsedtime < 90f)
         {
-            newMelee.AddStats(25f, 10f, 0.25f);
+            newMelee.AddStats(25f, 10f, 0.25f, 1);
         }
         else if (elapsedtime > 45f && elapsedtime < 135f)
         {
-            newMelee.AddStats(25f, 10f, 0.25f);
-            newMelee.AddStats(25f, 10f, 0.25f);
+            newMelee.AddStats(25f, 10f, 0.25f, +1);
+            newMelee.AddStats(25f, 10f, 0.25f, +1);
         }
     }
 }

@@ -25,6 +25,7 @@ public class PlayerProperties : MonoBehaviour
     [SerializeField] private float speed = 1f;
     [SerializeField] private float experience = 0f;
     [SerializeField] private float maxExperience = 100f;
+    [SerializeField] private float pickUpRange = 1f;
     [SerializeField] private int level = 1;
 
     private bool isInvincible = false;
@@ -49,6 +50,7 @@ public class PlayerProperties : MonoBehaviour
     public float Speed() { return speed;}
     public float Experience() { return experience;}
     public float MaxExperience() { return maxExperience; }
+    public float PickUpRange() {  return pickUpRange;}
     public int Level() { return level;}
 
     public void TakeDamage(float damage) 
@@ -91,7 +93,6 @@ public class PlayerProperties : MonoBehaviour
         Time.timeScale = 0f;
         gameManager.levelUpScreen.SetActive(true);
         Debug.Log("Level UP!!!");
-        
         
     }
     IEnumerator LevelUpPause()

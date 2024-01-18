@@ -21,6 +21,7 @@ public class Melee : MonoBehaviour
     private float hp = 25f;
     private float attack = 20f;
     private float speed = 1f;
+    private int expDropped = 1;
     [SerializeField] private GameObject exp;
     void Start()
     {
@@ -85,16 +86,19 @@ public class Melee : MonoBehaviour
         hp -= damage;
         if(hp <= 0f)
         {
+            float scoreMultiplier = (50 + (gameManager.ElapsedTime() / 3)) / 100;
+            gameManager.AddScore(10 * scoreMultiplier);
             Instantiate(exp, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
         return;
     }
     
-    public void AddStats(float HP, float Attack, float Speed)
+    public void AddStats(float HP, float Attack, float Speed, int ExpDropped)
     {
         hp += HP;
         attack += Attack;
         speed += Speed;
+        expDropped += ExpDropped;
     }
 }

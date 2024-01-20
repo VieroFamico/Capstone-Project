@@ -5,16 +5,6 @@ using UnityEngine;
 
 public class PlayerProperties : MonoBehaviour
 {
-    public class PlayerStats
-    {
-
-    }
-    
-    struct BulletStats
-    {
-
-    }
-    List<float> stats = new List<float>();
 
     [SerializeField] private float maxHP = 100f;
     [SerializeField] private float healthPoint = 100f;
@@ -28,18 +18,25 @@ public class PlayerProperties : MonoBehaviour
     [SerializeField] private float pickUpRange = 1f;
     [SerializeField] private int level = 1;
 
+    private float time;
     private bool isInvincible = false;
     private GameManager gameManager;
     
     void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(time > 1f / hpRegen)
+        {
+            Regen();
+        }
+
+        time += Time.deltaTime;
     }
     public float Health() { return healthPoint;}
     public float MaxHP() { return maxHP;}
@@ -53,11 +50,20 @@ public class PlayerProperties : MonoBehaviour
     public float PickUpRange() {  return pickUpRange;}
     public int Level() { return level;}
 
+    private void Regen()
+    {
+        healthPoint += 1;
+        if(healthPoint >= maxHP)
+        {
+            healthPoint = maxHP;
+        }
+        time = 0;
+    }
     public void TakeDamage(float damage) 
     {
         if (isInvincible) { return;}
         
-        healthPoint -= damage; 
+        healthPoint -= damage - defense; 
         if(healthPoint <= 0)
         {
             //dead

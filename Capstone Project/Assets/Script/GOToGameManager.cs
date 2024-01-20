@@ -16,6 +16,11 @@ public class GOToGameManager : MonoBehaviour
     public GameObject pauseScreen;
     public GameObject deathScreen;
     public TextMeshProUGUI playerLevel;
+    public TextMeshProUGUI timerDisplay;
+    public TextMeshProUGUI enemyKilled;
+    public TextMeshProUGUI timeSurvived;
+    public TextMeshProUGUI totalScore;
+    public TextMeshProUGUI gainedDNA;
 
     public GameObject autoShoot;
     public GameObject levelUpScreen;
@@ -42,8 +47,14 @@ public class GOToGameManager : MonoBehaviour
         gameManager.playerProperties = playerProperties;   
         gameManager.playerHP = playerHP;
         gameManager.playerEXP = playerEXP;
+        gameManager.pauseScreen = pauseScreen;
         gameManager.deathScreen = deathScreen;
         gameManager.playerLevel = playerLevel;
+        gameManager.timerDisplay = timerDisplay;
+        gameManager.enemyKilled = enemyKilled;
+        gameManager.timeSurvived = timeSurvived;
+        gameManager.totalScore = totalScore;
+        gameManager.gainedDNA = gainedDNA;
         gameManager.autoShoot = autoShoot;
         gameManager.levelUpScreen = levelUpScreen;
         gameManager.option1 = option1;

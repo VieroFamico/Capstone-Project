@@ -39,12 +39,6 @@ public class Melee : MonoBehaviour
     }
     void Update()
     {
-        if(gameManager.ElapsedTime() > 300f)
-        {
-            hp += 25f;
-            attack += 10f;
-            speed += 0.25f;
-        }
         if(player != null)
         {
             MoveToPlayer();

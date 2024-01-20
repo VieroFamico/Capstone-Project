@@ -21,6 +21,7 @@ public class HealthBarUI : MonoBehaviour
     {
         if(playerGO != null)
         {
+            healthBarSlider.maxValue = playerProperties.MaxHP();
             healthBarSlider.value = playerProperties.Health();
             healthBarSlider.GetComponentInChildren<TextMeshProUGUI>().text = playerProperties.Health().ToString();
         }

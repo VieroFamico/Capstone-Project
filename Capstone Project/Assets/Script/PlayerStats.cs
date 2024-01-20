@@ -24,4 +24,5 @@ public class PlayerStats : ScriptableObject
     public int rateOfFireUpgrade = 0;
     public int speedUpgrade = 0;
 
+    public float volumeSettings;
 }

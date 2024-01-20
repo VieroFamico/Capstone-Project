@@ -17,32 +17,35 @@ public class EnemySpawner : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
-    
+
     // Update is called once per frame
     void Update()
     {
-        if(elapsedtime < 45f)
+        if (player != null)
         {
-            if (10f < time)
+            if (elapsedtime < 45f)
             {
-                Spawn();
+                if (10f < time)
+                {
+                    Spawn();
+                }
+            }
+            else if (elapsedtime < 90f)
+            {
+                if (5f < time)
+                {
+                    Spawn();
+                }
+            }
+            else
+            {
+                if (2f < time)
+                {
+                    Spawn();
+                }
             }
         }
-        else if(elapsedtime < 90f)
-        {
-            if (5f < time)
-            {
-                Spawn();
-            }
-        }
-        else
-        {
-            if (2f < time)
-            {
-                Spawn();
-            }
-        }
-
+        
         time += (spawnrate * Time.fixedDeltaTime);
         elapsedtime = gameManager.ElapsedTime();
     }

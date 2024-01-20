@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using TMPro;
 using TMPro.EditorUtilities;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] private GameObject setting;
+    [SerializeField] private GameObject settingPanel;
+    [SerializeField] private Slider volumeSetting;
+    [SerializeField] private AudioMixer volumeMixer;
+    [SerializeField] private AudioMixerGroup volumeMixerGroup;
     [SerializeField] private AudioClip clickSound;
+    [SerializeField] private GameObject upgradePanel;
     private AudioSource audioSource;
 
 
@@ -30,7 +36,8 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         gameManager.state = GameManager.GameState.SelectLevel;
-        StartCoroutine(EStartGame());
+        SceneManager.LoadSceneAsync(1);
+        //StartCoroutine(EStartGame());
     }
     IEnumerator EStartGame()
     {
@@ -54,12 +61,20 @@ public class MenuManager : MonoBehaviour
     }
     public void Setting()
     {
-        if (setting.activeSelf)
-        {   
-            
-            setting.SetActive(false);
+        if (settingPanel.activeSelf)
+        {
+            SetMasterVolume();
+            settingPanel.SetActive(false);
         }
-        else { setting.SetActive(true); }
+        else { settingPanel.SetActive(true); }
+    }
+    public void UpgradePanel()
+    {
+        if (upgradePanel.activeSelf)
+        {
+            upgradePanel.SetActive(false);
+        }
+        else { upgradePanel.SetActive(true); }
     }
     public void ExitGame()
     {
@@ -75,11 +90,31 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    public void SetMasterVolume()
+    {
+        gameManager.SetVolume(volumeSetting.value);
+        volumeMixer.SetFloat("MasterVolume", Mathf.Log10(volumeSetting.value) * 20);
+    }
+    public void VolumeSliderChange()
+    {
+        if (true)
+        {
+            PlayClickingSound();
+        }
+    }
     public void PlayClickingSound()
     {
         if (clickSound != null)
         {
-            audioSource.PlayOneShot(clickSound);
+            GameObject newAudio = new GameObject();
+            AudioSource audioSource = newAudio.AddComponent<AudioSource>();
+            audioSource.clip = clickSound;
+            audioSource.outputAudioMixerGroup = volumeMixerGroup;
+            audioSource.Play();
+
+            DontDestroyOnLoad(newAudio);
+
+            Destroy(newAudio, clickSound.length);
         }
     }
 
@@ -89,18 +124,18 @@ public class MenuManager : MonoBehaviour
     }
     public void Stage2()
     {
-        selectedStage = 2;
+        selectedStage = 1;
     }
     public void Stage3()
     {
-        selectedStage = 3;
+        selectedStage = 1;
     }
     public void Stage4()
     {
-        selectedStage = 4;
+        selectedStage = 1;
     }
     public void Stage5()
     {
-        selectedStage = 5;
+        selectedStage = 1;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,6 +22,11 @@ public class GameManager : MonoBehaviour
     public GameObject pauseScreen;
     public GameObject deathScreen;
     public TextMeshProUGUI playerLevel;
+    public TextMeshProUGUI timerDisplay;
+    public TextMeshProUGUI enemyKilled;
+    public TextMeshProUGUI timeSurvived;
+    public TextMeshProUGUI totalScore;
+    public TextMeshProUGUI gainedDNA;
 
     public GameObject autoShoot;
     public GameObject levelUpScreen;
@@ -31,9 +37,12 @@ public class GameManager : MonoBehaviour
     public enum GameState { MainMenu, SelectLevel, InGame };
 
     public GameState state;
-    private float elapsedTime = 0;
+    
     private bool pause = false;
     private float score = 0;
+    private float elapsedTime = 0;
+    private float kill = 0;
+    private float dna = 0;
     private void Awake()
     {
         if (ManagerInstance == null)
@@ -48,24 +57,27 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        state = GameState.MainMenu;
-        playerGO = GameObject.FindGameObjectWithTag("Player");
+        if (SceneManager.GetActiveScene().buildIndex == 0) state = GameState.MainMenu;
+        if (SceneManager.GetActiveScene().buildIndex == 1) state = GameState.SelectLevel;
+        if (SceneManager.GetActiveScene().buildIndex == 2) state = GameState.InGame;
         elapsedTime = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(state != GameState.InGame && player != null)
+        
+        if(state == GameState.InGame && player != null)
         {
             if (player.AutoShoot()) autoShoot.SetActive(true);
             else autoShoot.SetActive(false);
+            Timer();
         }
-        if(Input.GetKeyDown(KeyCode.Escape) && state != GameState.InGame && player != null)
+        if(Input.GetKeyDown(KeyCode.Escape) && state == GameState.InGame && player != null)
         {
             PauseScreen();
         }
-
+        
         elapsedTime += Time.deltaTime;
 
     }
@@ -134,11 +146,34 @@ public class GameManager : MonoBehaviour
 
     private void DisplayScore()
     {
-        throw new NotImplementedException();
+        totalScore.text = ((int)score).ToString();
+
+        timeSurvived.text = string.Format("{0:00}:{1:00}", (int)(elapsedTime / 60), (int)(elapsedTime % 60));
+
+        enemyKilled.text = ((int)kill).ToString();
+
+        gainedDNA.text = ((int)dna).ToString();
+
+        playerStats.DNA = (int)dna;
+    }
+    private void Timer()
+    {
+        timerDisplay.text = string.Format("{0:00}:{1:00}", (elapsedTime / 60), (elapsedTime % 60));
     }
 
     public void AddScore(float ScoreToAdd)
     {
         score += ScoreToAdd;
+        kill += 1;
+        dna += ScoreToAdd / 10f;
+    }
+
+    public float GetVolume()
+    {
+        return playerStats.volumeSettings;
+    }
+    public void SetVolume(float volume)
+    {
+        playerStats.volumeSettings = volume;
     }
 }
